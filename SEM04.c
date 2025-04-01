@@ -90,7 +90,18 @@ void adaugaLaInceputInLista(nod**cap, Masina masinaNoua)
 	(*cap) = nou;
 }
 
-//SI ORIUNDE IN LISTA IN MIJLOC
+//SI dupa alt nod
+void adaugaDupaAltNod(nod* pozitie, Masina masinaNoua)
+{
+	if(pozitie==NULL)
+	{
+		printf("Nodul dupa care vreti sa inserati nu exista, nu se poate insera");
+	}
+	nod* nou = malloc(sizeof(nod));
+	nou->info = masinaNoua;
+	nou->next = pozitie->next;
+	pozitie->next = nou;
+}
 
 nod* citireListaMasiniDinFisier(const char* numeFisier)
 {

@@ -146,7 +146,7 @@ Telefon* citireVectorTelFisier(const char* numeFisier, int* nrTelCitite)
 	fclose(f);
 	return vTelefoane;
 }
-
+//!!!!!!!!!!!!!!!!
 void dezalocareVectorTel(Telefon** vector, int* nrTel) 
 {
 	for (int i = 0; i < (nrTel); i++)
@@ -159,8 +159,73 @@ void dezalocareVectorTel(Telefon** vector, int* nrTel)
 		(*vector) = NULL;
 		(*nrTel) = 0;
 	}
+}//!!!!!!!!!!!!!!!!!!!!
+//s4
+
+typedef struct Nod 
+{
+	Telefon info;
+	Nod* next;
+} Nod ;
+
+void afisareListaTel(Nod* cap) {
+	while (cap)
+	{
+		afisare(cap->info);
+		cap = cap->next;
+	}
+}
+void adaugaMasinaInLista(Nod**cap, Telefon telNou) 
+{
+	Nod* nou = (Nod*)malloc(sizeof(Nod));
+	nou->info = telNou;
+	nou->next = NULL;
+	if (*cap == NULL)
+	{
+		(*cap) = nou;
+	}
+	else {
+		Nod* aux = *cap;
+		while (aux->next)
+		{
+			aux = aux->next;
+		}
+		aux->next = nou;
+	}
+}
+void adaugaLaInceputInLista(Nod** cap, Telefon telNou) 
+{
+	Nod* nou = (Nod*)malloc(sizeof(Nod));
+	nou->info = telNou;
+	nou->next = NULL;
+	(*cap) = nou;
+}
+
+Nod* citireListaTelDinFisier(const char* numeFisier) 
+{
+	Nod* cap = NULL;
+	FILE* f = (numeFisier, "r");
+	while (!feof(f))
+	{
+		adaugaMasinaInLista(&cap, citireTelFisier(f));
+	}
+	fclose(f);
+	return cap;
 }
 //
+void dezalocareListaTel(Nod** cap) 
+{
+	while (*cap) 
+	{
+		Nod* aux = *cap;
+		*cap = aux->next;
+		if (aux->info.producator)
+		{
+			free(aux->info.producator);
+		}
+		free(aux);
+	}
+}
 
 
 int main() {
